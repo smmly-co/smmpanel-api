@@ -6,14 +6,7 @@
 
 The private application repository contains a customer API entry point at `apiconnect/index.php`. In the inspected default-branch revision, that entry point deliberately responds with HTTP `503` and a JSON error before the older handler can execute.
 
-The older, unreachable handler contains legacy SMM V2-style actions named:
-
-- `balance`
-- `services`
-- `add`
-- `status`
-
-These names describe code present behind the early exit, **not currently supported endpoints**. Their request validation, pricing, wallet mutation, provider submission, and error behavior have not been approved as a public contract. They must not be used as integration guidance.
+The older, unreachable handler contains legacy SMM V2-style actions named `balance`, `services`, `add`, and `status`. These names describe code present behind the early exit, **not currently supported endpoints**. Their request validation, pricing, wallet mutation, provider submission, and error behavior have not been approved as a public contract. They must not be used as integration guidance.
 
 The remediation roadmap also identifies `refill` and `cancel` as future additive actions. They are not documented here as available capabilities.
 
@@ -23,18 +16,22 @@ The product constraint is to preserve existing SMM V2 request and response shape
 
 ## Release gates
 
-The API must remain unavailable until all of the following are complete:
+The API must remain unavailable until all applicable gates are complete and evidenced:
 
 1. Wallet debits, refunds, and ledger attribution use the approved integrity primitives.
 2. Provider submission is moved outside the money transaction and unknown submissions cannot be automatically resubmitted.
 3. The shared order-submission path is used by both web and API channels.
 4. API pricing and discount behavior matches the web order path under the approved owner decision.
 5. Authentication, authorization, input validation, abuse controls, rate limits, and safe error handling are implemented and tested.
-6. The existing action response shapes are captured as fixtures and verified for compatibility.
+6. Existing action response shapes are captured as fixtures and verified for compatibility.
 7. Refill and cancellation behavior is implemented only with server-side eligibility checks and provider capability evidence.
-8. The release is tested in a staging environment and explicitly approved.
+8. The release is tested in staging and explicitly approved.
 
 The order matters: restoring the old handler before the financial and order-lifecycle prerequisites would expose the same defects through a second entry point.
+
+## Release verification
+
+Use [RELEASE-CHECKLIST.md](RELEASE-CHECKLIST.md) as the evidence register. Its statuses are deliberately conservative: a gate is not complete merely because a roadmap item or implementation exists.
 
 ## Planned contract sections
 
@@ -43,11 +40,13 @@ When release gates are met, this repository will publish:
 - Base URL and versioning
 - Authentication and API-key lifecycle
 - Request encoding and common parameters
-- Services, balance, order creation, and order status
+- Supported services, balance, order creation, and order status
 - Refill and cancellation, if supported
 - Response schemas and error catalogue
 - Rate limits, idempotency, retries, and timeout semantics
 - Examples and client libraries
+
+No URL, parameter, response field, error code, or retry behavior is published until verified against the implementation.
 
 ## Security
 
@@ -57,4 +56,4 @@ Never commit API keys, provider credentials, bot tokens, customer records, produ
 
 - [SMMly documentation](https://github.com/smmly-co/docs)
 - [SMMly examples](https://github.com/smmly-co/examples)
-- [SMMly Telegram bot](https://github.com/smmly-co/smmpanel-telegrambot)
+- [SMMly Telegram bot](https://github.com/smmly-co/smmpanel-telegram-bot)
