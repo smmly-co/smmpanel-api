@@ -4,7 +4,7 @@ API documentation and integration resources for SMMly.
 
 > **Status: Not released.** The current SMMly application API is unavailable while its implementation is being remediated and verified. This repository does not currently publish a supported endpoint or SDK.
 
-Read the current [API contract and release status](CONTRACT-STATUS.md) before planning an integration.
+Read the [API contract and release status](CONTRACT-STATUS.md) and the [release implementation checklist](RELEASE-CHECKLIST.md) before planning an integration.
 
 ## Scope
 
